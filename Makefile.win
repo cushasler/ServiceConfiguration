@@ -1,0 +1,48 @@
+# Project: ServiceTool
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
+WINDRES  = windres.exe
+RES      = obj/ServiceTool_private.res
+OBJ      = obj/main.o obj/Configuration.o obj/Configuration_impl.o obj/Debug.o obj/Util.o obj/BuildTeloc.o $(RES)
+LINKOBJ  = obj/main.o obj/Configuration.o obj/Configuration_impl.o obj/Debug.o obj/Util.o obj/BuildTeloc.o $(RES)
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -L"C:/Project/Personal/ServiceTool/libxl/libxl-4.2.0/bin64" -lxl -g3
+INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Project/Personal/ServiceTool/include" -I"C:/Project/Personal/ServiceTool/libxl/libxl-4.2.0/include_cpp"
+CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"C:/Project/Personal/ServiceTool/include" -I"C:/Project/Personal/ServiceTool/libxl/libxl-4.2.0/include_cpp"
+BIN      = output/ServiceTool.exe
+CXXFLAGS = $(CXXINCS) -g3
+CFLAGS   = $(INCS) -g3
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+obj/main.o: main.cpp
+	$(CPP) -c main.cpp -o obj/main.o $(CXXFLAGS)
+
+obj/Configuration.o: src/Configuration.cpp
+	$(CPP) -c src/Configuration.cpp -o obj/Configuration.o $(CXXFLAGS)
+
+obj/Configuration_impl.o: src/Configuration_impl.cpp
+	$(CPP) -c src/Configuration_impl.cpp -o obj/Configuration_impl.o $(CXXFLAGS)
+
+obj/Debug.o: src/Debug.cpp
+	$(CPP) -c src/Debug.cpp -o obj/Debug.o $(CXXFLAGS)
+
+obj/Util.o: src/Util.cpp
+	$(CPP) -c src/Util.cpp -o obj/Util.o $(CXXFLAGS)
+
+obj/BuildTeloc.o: src/BuildTeloc.cpp
+	$(CPP) -c src/BuildTeloc.cpp -o obj/BuildTeloc.o $(CXXFLAGS)
+
+obj/ServiceTool_private.res: ServiceTool_private.rc 
+	$(WINDRES) -i ServiceTool_private.rc --input-format=rc -o obj/ServiceTool_private.res -O coff  --include-dir C:/Project/Personal/SERVIC~1/src
+
