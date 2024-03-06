@@ -6,11 +6,16 @@
 #include <iostream>
 #include <fstream>
 #include <istream>
+#include <vector>
+#include <sstream>
 #include <string>
+#include "libxl.h"
 #include "Debug.h"
 #include "Configuration.h"
 #include "Configuration_impl.h"
+#include "Compare.h"
 
+using namespace libxl;
 using namespace std;
 //using namespace debug_;
 
@@ -29,13 +34,13 @@ config::config()
 config_::t_configstruct * config::getconfigstruct(void)
 {
 	static config_::t_configstruct configstruct;
-    return(&configstruct);	
+    return(&configstruct);
 }
 
 config_::t_telocstrcut * config::gettelocstruct(void)
 {
 	static config_::t_telocstrcut telocstruct;
-    return(&telocstruct);	
+    return(&telocstruct);
 }
 
 config &config::getinstance()
@@ -52,39 +57,43 @@ void config::readfileconfig(void)
 {
 	//read configuration file
    //std::string line;
-   
-   std::cout<<FUNCTION_NAME<<std::endl;
-   if(fname.is_open())
-   {
-        std::cout<<"read filename"<<std::endl;
-        
- /*  while ( getline (fname,line) )
-    {
-      cout << line << '\n';
-    }*/
-	getline(fname, getconfigstruct()->line);
-	cout<<getconfigstruct()->line<<endl;
-	gettelocstruct()->kindofTeloc = whoamI(getconfigstruct()->line);
-	std::cout<<"kindofteloc == "<<gettelocstruct()->kindofTeloc<<std::endl;
-	pimpl->extract_filename(getconfigstruct()->line, getconfigstruct()->filename);
-    getline(fname, getconfigstruct()->line);
-	cout<<getconfigstruct()->line<<endl;
-	pimpl->extract_column_compare(getconfigstruct()->line, getconfigstruct()->column);
-//	DEBUG_DISPLAY(1, getconfigstruct()->filename);
-	if(pimpl->parser_kenfile(getconfigstruct()->column, getconfigstruct()->filename) == type_::TRUE)
-	{
-		// scroll column found
-		pimpl->scroll_column(gettelocstruct()->kindofTeloc);
-	}
-	    
-    //extract_filename(getconfigstruct()->filename, getconfigstruct()->kenfile);
-    //  }
-    //else
-    // {
-      //  std::cout<<"Error open file Config.ini"<<std::endl;
-        //debug_::DEBUG_INFO("Configuration.cpp", 15);
-        //DEBUG_INFO();
-    }
+/*   Book* book  = xlCreateXMLBook();
+   Book* obook = xlCreateXMLBook();*/
+   type_::UINT64 number_of_Teloc = 0x0U;
+
+   std::ofstream MatrixTeloc("Teloc_Matrix.csv");
+   pimpl->create_template(MatrixTeloc);
+   if(fname.is_open()){
+   getline(fname, getconfigstruct()->line);
+   std::cout<<"line :: "<<getconfigstruct()->line<<std::endl;
+  gettelocstruct()->kindofTeloc = whoamI(getconfigstruct()->line);
+   pimpl->extract_filename(getconfigstruct()->line, getconfigstruct()->filename,
+					       &getconfigstruct()->assemblycode[number_of_Teloc][0]);
+   std::cout<<"getconfigstruct()->filename:: "<<getconfigstruct()->filename<<std::endl;
+  ifstream Data(getconfigstruct()->filename, ifstream::in);
+  if(Data.is_open()){
+	  std::cout<<"Enter in the loop"<<std::endl;
+	  getline(Data, getconfigstruct()->title);
+
+	  while(getline(Data, getconfigstruct()->line))
+			//getline(Data, getconfigstruct()->line);
+	  {
+				//std::cout<<"line = "<<getconfigstruct()->line<<std::endl;
+				std::stringstream rowStream(getconfigstruct()->line);
+				std::string draft;
+				std::vector<std::string> cols;
+				while(getline(rowStream, draft, ';')){
+			//getconfigstruct()->assemblyteloc[ii++] = draft;
+				cols.push_back(draft);
+				}
+				pimpl->create_output_file(cols, MatrixTeloc);
+		}
+  }
+  }
+  MatrixTeloc.close();
+  //open the file in reading mode
+  ifstream CompareTeloc("Teloc_Matrix.csv", ifstream::in);
+  pimpl->compare_create_configuration(CompareTeloc);
 }
 
 static string findteloccode(std::string line)
@@ -103,7 +112,7 @@ static string lookuptable(std::string teloccode)
 	 std::string lret = "unknown";
 	 static std::string table[2][2] = {{"2421","Teloc 1500"},
 								       {"2620","Teloc 2500"}};
-	
+
 	for(type_::UINT8 jj = 0; jj < 2; jj++)
 	{
 		if(table[jj][0] == teloccode)

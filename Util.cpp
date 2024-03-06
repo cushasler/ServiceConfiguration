@@ -14,8 +14,9 @@ type_::ebool util_::charpointer_compare(const type_::CHAR *a, const type_::CHAR 
 	for(int i = 0; strlen(a) < strlen(b) ? *a!= '\0' : *b!= '\0'; i++, *a++, *b++ )
 	{
 		if(*a != *b)
-			return(type_::FALSE);
+			ret = (type_::FALSE);
 	}
+	return(ret);
 }
 
 type_::e_result util_::CheckArg(void *pArg)

@@ -1,6 +1,7 @@
 /**
-* @file Type_.h
-* @brief the implements the custom typedef 
+* @file Types.h
+* @brief the file implements the custom typedef
+* @author Salvatore Muoio
 */
 
 #ifndef __TYPE_H__
@@ -8,7 +9,7 @@
 
 /**
 * @namespace type_
-* @brief namespace used to manages the typedef 
+* @brief namespace used to manages the typedef
 */
 namespace type_
 {
@@ -29,7 +30,7 @@ namespace type_
 		FALSE, /*!< False is 0 */
 		TRUE, /*!< True is 1 */
 	}ebool;
-	
+
 	/**
 	* \enum e_result
  	* \brief the enum is used as validity check in the methods

@@ -1,0 +1,2 @@
+#define ServiceTool_VERSION_MAJOR @ServiceTool_VERSION_MAJOR@
+#define ServiceTool_VERSION_MINOR @ServiceTool_VERSION_MINOR@

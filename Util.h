@@ -1,7 +1,7 @@
 /**
 * @file Util.h
 * @brief In this file are implemented all methods util
-* @authore Salvatore Muoio
+* @author Salvatore Muoio
 */
 #ifndef __UTIL_H__
 #define __UTIL_H__
