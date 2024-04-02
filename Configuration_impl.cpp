@@ -14,11 +14,14 @@
 #include "Configuration_impl.h"
 #include "Util.h"
 #include "BuildTeloc.h"
+#include "Compare.h"
 
 using namespace libxl;
 
 using namespace std;
 static ofstream myfile;
+static ofstream fCompare;
+
 
 static void reset_filestruct(configimpl_::t_filestruct *ptr);
 static void write_file(ofstream &file, configimpl_::t_filestruct *ptr);
@@ -259,6 +262,7 @@ void config::configimpl::create_output_file(std::vector<std::string> col, ofstre
 		if(col[0] != assembly)
 		{
 		//toogle = type_::TRUE;
+			getconfigstruct()->index_row++;
 			std::cout<<"assembly = "<<assembly<<std::endl;
 			std::cout<<"col[0] = "<<col[0]<<std::endl;
  			//column.push_back(col[0]);
@@ -266,8 +270,8 @@ void config::configimpl::create_output_file(std::vector<std::string> col, ofstre
  			write_file(file, getfilestruct());
 			getfilestruct()->assembly_code = assembly;
 		}
-		std::cout<<"col[8] = "<<col[8]<<std::endl;
-			extract_family(col[8], file, getfilestruct());
+		std::cout<<"col[43 = "<<col[3]<<std::endl;
+			extract_family(col[3], file, getfilestruct());
 	}
 
 }
@@ -360,14 +364,14 @@ static vector<string> create_row(std::string line)
 {
 	vector<string> lrow;
 	std::string word;
-	std::cout<<"create_row line = "<<line<<std::endl;
+	//std::cout<<"create_row line = "<<line<<std::endl;
 	//getline()
 	lrow.clear();
 	stringstream s(line);
 	while(getline(s, word, ';'))
 	{
 		lrow.push_back(word);
-		std::cout<<"word = "<<word<<std::endl;
+		//std::cout<<"word = "<<word<<std::endl;
 	}
 	return(lrow);
 }
@@ -383,37 +387,83 @@ static type_::UINT64 create_code(std::vector<string> row)
 				lcode += 1<<(jj-2);
 		}
 	}
-	std::cout<<"lcode = "<<lcode<<std::endl;
-	return(lcode);
+	//std::cout<<"lcode = "<<lcode<<std::endl;
+	return(lcode&0x3FF);
 }
 
 
-static void create_main_config(std::string line)
+static type_::UINT64 create_main_config(std::string line)
 {
 	//--->>>
-	vector<string> row;
+//	type_::UINT64 main_code = 0x0U;
+	//vector<string> row;
 	type_::UINT64 codeconfig = 0x0U;
-	row = create_row(line);
-	codeconfig = create_code(row);
+	//row = create_row(line);
+	codeconfig = (create_code(create_row(line))&0x3FF);
+	return(codeconfig);
 }
-void config::configimpl::compare_create_configuration(std::ifstream &osheet)
+
+static void read_header_file(std::fstream &osheet, std::string &line, type_::UINT64 size)
+{
+
+	for(type_::UINT64 ii = 0; ii < 2+size; ii++)
+		getline(osheet, line);
+}
+
+void config::configimpl::compare_create_configuration(std::fstream &osheet)
 {
 	std::string line;
+	const std::string separator = ";";
+	type_::UINT64 main_code = 0x0U;
+	type_::UINT64 code = 0x0U;
+	type_::UINT64 match = 0x0U;
+	type_::UINT64 jj = 0;
+	std::string assembly_code;
+	fCompare.open ("TelocMatch.csv",ios::app);
+	fCompare<< "AssemblyCode "<<separator,
+	fCompare<< " code  " <<separator;
+	fCompare<< "    number of match"<<endl;
+
 	if(osheet.is_open())
 	{
-		//read first row, and set configuration teloc under test!!!!
-		getline(osheet, line);
-		getline(osheet, line);
-		getline(osheet, line);
-		create_main_config(line);
+		//read first row, and set configuration teloc under test!!!
+		for(type_::UINT64 jj = 0; jj < getconfigstruct()->index_row-1; jj++)
+		{
+			std::cout<<"index_row = "<<getconfigstruct()->index_row<<std::endl;
+		read_header_file(osheet, line, jj+1);
+		assembly_code = line.substr(0, 13);
+		main_code = create_main_config(line);
+		osheet.clear();
+		osheet.seekg (0, ios::beg);
+		read_header_file(osheet, line, 0);
+		std::cout<<"main_code = "<<main_code<<std::endl;
 		while(!osheet.eof())
 		{
 			getline(osheet, line);
-			std::cout<<" while line = "<<line<<std::endl;
+			//std::cout<<" while line = "<<line<<std::endl;
 			if(line != "")
-				create_code(create_row(line));
-		}
-	}
+			{
+				code = create_code(create_row(line));
+				//std::cout<<"code = "<<code<<std::endl;
+			}//if
+			//compare the code
+			if (compare_handle(main_code, code) == type_::TRUE)
+				match++;
+			std::cout<<"number match = "<<match<<std::endl;
+		}//While
+		osheet.clear();
+		osheet.seekg (0, ios::beg);
+		//read_header_file(osheet, line, jj+1);
+		//osheet<<line;
+		//osheet<<match<<endl;
+		fCompare<< "AssemblyCode = "<<assembly_code<<separator,
+		fCompare<< " code  " << main_code<<separator;
+		fCompare<< "    numberofmatch = "<< match-1<<endl;
+		match = 0x0U;
+	}//if
+		//osheet.seekg(0, osheet.beg);
+	}//for
 	osheet.close();
+	fCompare.close();
 }
 

@@ -16,7 +16,7 @@
  */
 #define TELOC_BOARD 20
 
-#define DATABASE_FAMILY_T1500_SIZE 29
+#define DATABASE_FAMILY_T1500_SIZE 38
 
 #define DATABASE_FAMILY_T1500 {{"1.341", "POSU"},\
 							   {"0.360", "POSU"},\
@@ -25,10 +25,15 @@
 							   {"0.362", "POSU"},\
 							   {"0.200", "CORE"},\
 							   {"0.201", "CORE"},\
+							   {"0.300", "CORE"},\
+							   {"0.301", "CORE"},\
 							   {"1.212", "DAIO"},\
+							   {"0.312", "DAIO"},\
                                {"1.226", "REBO"},\
+							   {"1.326", "REBO"},\
 							   {"0.205", "IOCO"},\
 							   {"0.206", "IOCO"},\
+							   {"0.306", "IOCO"},\
 							   {"5.200", "SABO"},\
 							   {"5.201", "SABO"},\
 							   {"1.347", "MVB"}, \
@@ -44,10 +49,14 @@
 							   {"0.366", "BACKPLANE"},\
 							   {"0.367", "BACKPLANE"},\
 							   {"0.548", "CPM"},\
+							   {"1.137", "CPM"},\
 							   {"1.053", "CPM"},\
+							   {"1.159", "CPM"},\
+							   {"1.160", "CPM"},\
 							   {"0.566", "CPM"},\
 							   {"0.138", "CPM"},\
-							   }\
+							   {"0.548", "CPM"},\
+	}\
 
 #define POSITION_TO_WRITING_SIZE 11
 
