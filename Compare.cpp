@@ -116,4 +116,23 @@ type_::UINT64 plausibilitycheck_boards(buildteloc_::t_buildtelocstruct ptrbuildt
 	return(valuematch);
 }
 
+type_::ebool compare_handle(type_::UINT64 main_config, type_::UINT64 code_config)
+{
+	type_::ebool match = type_:: FALSE;
+	const type_::UINT64 basic_config = 0x460;
+	std::cout<<"main_config =="<<main_config<<std::endl;
+	std::cout<<"code_config =="<<code_config<<std::endl;
+	if(code_config == main_config)
+		match = type_::TRUE;
+	else
+	{
+		type_::UINT64 lresult = main_config ^ code_config;
+		lresult &= basic_config;
+		if(lresult == basic_config)
+			match = type_::TRUE;
+	}
+	std::cout<<"'match =='"<<match<<std::endl;
+	return(match);
+}
+
 

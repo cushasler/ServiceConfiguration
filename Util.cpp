@@ -1,7 +1,7 @@
 /**
 * @file Util.cpp
 * @brief In this file are implemented all methods util
-* @authore Salvatore Muoio
+* @author Salvatore Muoio
 */
 #include <iostream>
 #include <string.h>

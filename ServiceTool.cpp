@@ -1,3 +1,8 @@
+/**
+* @file ServiceTool.cpp
+* @brief main of sw project
+* @author Salvatore Muoio
+*/
 #include <iostream>
 #include "config.h"
 #include "Configuration.h"

@@ -87,12 +87,14 @@ void config::readfileconfig(void)
 				cols.push_back(draft);
 				}
 				pimpl->create_output_file(cols, MatrixTeloc);
+				//getconfigstruct()->index_row++;
 		}
   }
   }
   MatrixTeloc.close();
+  std::cout<<"index_row ="<<getconfigstruct()->index_row<<std::endl;
   //open the file in reading mode
-  ifstream CompareTeloc("Teloc_Matrix.csv", ifstream::in);
+  fstream CompareTeloc("Teloc_Matrix.csv", ios::in|ios::out);
   pimpl->compare_create_configuration(CompareTeloc);
 }
 
