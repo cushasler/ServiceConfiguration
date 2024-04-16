@@ -18,7 +18,8 @@ namespace config_
 {
    typedef struct
     {
-        std::string line;
+        type_::UINT64 index_row;
+	    std::string line;
         std::string title;
 		type_::CHAR filename[20];
         type_::CHAR column[60];

@@ -76,7 +76,7 @@ struct config::configimpl
 	void extract_family(std::string code, ofstream &osheet, configimpl_::t_filestruct *ptr);
 	void extract_version(std::string code, std::string &variant);
 	void write_variant(type_::UINT64 pos, std::string variant, configimpl_::t_filestruct *ptr);
-	void compare_create_configuration(ifstream &osheet);
+	void compare_create_configuration(fstream &osheet);
 };
 
 

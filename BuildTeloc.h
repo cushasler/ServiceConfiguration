@@ -1,6 +1,6 @@
 /**
-* @file buildTeloc
-* @brief the file implements all methods use in config impl to build a teloc
+* @file BuildTeloc.h
+* @brief the file implements all methods used in config impl to build a teloc
 * @author Salvatore Muoio
 */
 
@@ -15,9 +15,15 @@
  * @brief maximum boards of Teloc
  */
 #define TELOC_BOARD 20
-
+/**
+ * @def DATABASE_FAMILY_T1500_SIZE
+ * @brief size of family databasec
+ */
 #define DATABASE_FAMILY_T1500_SIZE 38
-
+/**
+ * @def DATABASE_FAMILY_T1500
+ * @brief family databasec
+ */
 #define DATABASE_FAMILY_T1500 {{"1.341", "POSU"},\
 							   {"0.360", "POSU"},\
 							   {"0.361", "POSU"},\
@@ -58,8 +64,15 @@
 							   {"0.548", "CPM"},\
 	}\
 
+/**
+ * @def POSITION_TO_WRITING_SIZE
+ * @brief size POSITION_TO_WRITING_SIZE
+*/
 #define POSITION_TO_WRITING_SIZE 11
-
+/**
+ * @def POSITION_TO_WRITING
+ * @brief database  POSITION_TO_WRITING
+*/
 #define POSITION_TO_WRITING {{"POSU", "3"},\
                              {"CORE", "4"},\
 							 {"IOCO", "5"},\
@@ -128,17 +141,17 @@ namespace buildteloc_
 	typedef struct
 	{
 		type_::UINT64 matchvalue;  /*!< value match */
-		type_::UINT64 posu;
-		type_::UINT64 core;
-		type_::UINT64 ioco;
-		type_::UINT64 daio;
-		type_::UINT64 rebo;
-		type_::UINT64 sabo;
-		type_::UINT64 mvb;
-		type_::UINT64 cpm;
-		type_::UINT64 sram;
-		type_::UINT64 flash;
-		type_::UINT64 backplane;
+		type_::UINT64 posu; /*!< value match posu*/
+		type_::UINT64 core; /*!< value match core*/
+		type_::UINT64 ioco; /*!< value match ioco*/
+		type_::UINT64 daio; /*!< value match daio*/
+		type_::UINT64 rebo; /*!< value match rebo*/
+		type_::UINT64 sabo; /*!< value match sabo*/
+		type_::UINT64 mvb;  /*!< value match mvb*/
+		type_::UINT64 cpm;  /*!< value match cpm*/
+		type_::UINT64 sram; /*!< value match sram*/
+		type_::UINT64 flash; /*!< value match flash*/
+		type_::UINT64 backplane;  /*!< value match backplane*/
 	}t_teloc_config;
 }//namespace
 
@@ -158,9 +171,21 @@ void lookuptableTeloc1500(const type_::CHAR * const s, type_::UINT64 index, std:
 * \return
 */
 void lookuptableTeloc2500(const type_::CHAR * const s, type_::UINT64 index, std::ofstream &myfile);
-
+/**
+* \fn type_::ebool lookuptablefamily(const std::string family, std::string &name);
+* \brief the function check the family code for the boards
+* \param family, value to check in the database
+* \param name,the board name linked to the family code
+* \return board name
+*/
 type_::ebool lookuptablefamily(const std::string family, std::string &name);
-
+/**
+* \fn type_::ebool lookuptableposition(cconst std::string name);
+* \brief the function check the position code for the boards
+* \param family, value to check in the database
+* \param name,the board name linked to the family code
+* \return board name
+*/
 type_::UINT64 lookuptableposition(const std::string name);
 
 

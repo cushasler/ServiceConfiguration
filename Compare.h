@@ -55,6 +55,14 @@ type_::UINT64 plausibilitycheck_numberboard(buildteloc_::t_buildtelocstruct ptrb
 * @return value of not match
 */
 type_::UINT64 plausibilitycheck_boards(buildteloc_::t_buildtelocstruct ptrbuildtelocstruc[][TELOC_BOARD], type_::UINT64 len, type_::UINT64 jj);
+/*!
+* @fn type_::ebool compare_handle(type_::UINT64 main_config, type_::UINT64 code_config)
+* @brief the function manages the main compare
+* @param main_config, main  configuration
+* @param code_config configuration code
+* @return value of not match
+*/
+type_::ebool compare_handle(type_::UINT64 main_config, type_::UINT64 code_config);
 
 
 #endif

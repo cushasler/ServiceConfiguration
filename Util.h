@@ -18,6 +18,12 @@ namespace util_
     * \return status of check
     */
 	type_::e_result CheckArg(void *pArg);
+	/**
+    * \fn type_::UINT64 ConverTelocCode2Num(std::string teloccode)
+    * \brief the function returns which kinf of Teloc is under test
+    * \param *teloccode, teloc code
+    * \return kind of Teloc
+    */
 	type_::UINT64 ConverTelocCode2Num(std::string teloccode);
 
 }
