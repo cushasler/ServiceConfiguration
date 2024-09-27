@@ -57,14 +57,19 @@ static void setboard(std::string board_name, buildteloc_::t_buildtelocstruct *pt
 	}
 }
 
-
+/**
+* \fn void lookuptableTeloc1500(const type_::CHAR * const s, type_::UINT64 index, std::ofstream &myfile)
+* \brief the function build the teloc 1500
+* \param *s, pointer to be string read in xlsx file
+* \return
+*/
 void lookuptableTeloc1500(const type_::CHAR * const s, type_::UINT64 index, std::ofstream &myfile)
 {
 	// configure the database
 	static std::string table[MAX_BOARD_1500][MAX_BOARD_1500] = DATABASE_BOARD_T1500;
 	if(util_::CheckArg((type_::CHAR*) s) == type_::RESULT_OK)
 	{
-		//std::cout<<FUNCTION_NAME<<std::endl;
+		std::cout<<FUNCTION_NAME<<std::endl;
 		type_::UINT64 ii = 0;
 		for(ii = 0; ii < MAX_BOARD_1500; ii++)
 		{
@@ -90,7 +95,12 @@ void lookuptableTeloc1500(const type_::CHAR * const s, type_::UINT64 index, std:
 		}//for
 	}
 }
-
+/**
+* \fn void lookuptableTeloc2500(const type_::CHAR * const s, type_::UINT64 index, std::ofstream &myfile)
+* \brief the function build the teloc 2500
+* \param *s, pointer to be string read in xlsx file
+* \return
+*/
 void lookuptableTeloc2500(const type_::CHAR * const s, type_::UINT64 index, std::ofstream &myfile)
 {
 	static std::string table[MAX_BOARD_2500][MAX_BOARD_2500] = DATABASE_BOARD_T2500;
@@ -102,6 +112,7 @@ void lookuptableTeloc2500(const type_::CHAR * const s, type_::UINT64 index, std:
 	std::cout<<ss<<endl;
 	the engine could read the string without the version!!!!
 */
+		//std::cout<<FUNCTION_NAME<<std::endl;
 		for(int ii = 0; ii < MAX_BOARD_2500; ii++)
 		{
 			if(table[ii][0] == s)
@@ -130,12 +141,12 @@ void lookuptableTeloc2500(const type_::CHAR * const s, type_::UINT64 index, std:
 
 type_::ebool lookuptablefamily(const std::string family, std::string &name)
 {
-	static std::string table[DATABASE_FAMILY_T1500_SIZE][DATABASE_FAMILY_T1500_SIZE] = DATABASE_FAMILY_T1500;
+	static std::string table[DATABASE_FAMILY_TX500_SIZE][DATABASE_FAMILY_TX500_SIZE] = DATABASE_FAMILY_TX500;
 	type_::ebool lfind = type_::FALSE;
-	for(int jj = 0; jj < DATABASE_FAMILY_T1500_SIZE; jj++)
+	for(int jj = 0; jj < DATABASE_FAMILY_TX500_SIZE; jj++)
 	{
-//		std::cout<<"Table = "<<table[jj][0]<<std::endl;lcon
-//		std::cout<<"family = "<<family<<std::endl;
+		//std::cout<<"Table = "<<table[jj][0]<<std::endl;
+		//std::cout<<"family = "<<family<<std::endl;
 		if(table[jj][0] == family)
 		{
 			lfind = type_::TRUE;
@@ -144,7 +155,7 @@ type_::ebool lookuptablefamily(const std::string family, std::string &name)
 			break;
 		}//if
 	}//for
-//	std::cout<<"lfind = "<<lfind<<std::endl;
+	//std::cout<<"lfind = "<<lfind<<std::endl;
 	return(lfind);
 }
 

@@ -8,7 +8,7 @@ project (ServiceTool
 # This project will output an executable file
 add_executable(${PROJECT_NAME} ServiceTool.cpp Configuration.cpp 
                                Configuration_impl.cpp BuildTeloc.cpp 
-                               Compare.cpp Util.cpp Debug.cpp)
+                               Compare.cpp Util.cpp Debug.cpp Teloc4000_Impl.cpp Teloc3000_Impl.cpp)
 
 # Create a simple configuration header
 configure_file(config.h.in config.h)

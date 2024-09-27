@@ -19,31 +19,45 @@
  * @def DATABASE_FAMILY_T1500_SIZE
  * @brief size of family databasec
  */
-#define DATABASE_FAMILY_T1500_SIZE 38
+#define DATABASE_FAMILY_TX500_SIZE 57
 /**
  * @def DATABASE_FAMILY_T1500
  * @brief family databasec
  */
-#define DATABASE_FAMILY_T1500 {{"1.341", "POSU"},\
+#define DATABASE_FAMILY_TX500 {{"1.341", "POSU"},\
 							   {"0.360", "POSU"},\
 							   {"0.361", "POSU"},\
 							   {"0.260", "POSU"},\
+							   {"0.361", "POSU"},\
 							   {"0.362", "POSU"},\
 							   {"0.200", "CORE"},\
 							   {"0.201", "CORE"},\
+							   {"1.201", "CORE"},\
 							   {"0.300", "CORE"},\
 							   {"0.301", "CORE"},\
+							   {"1.301", "CORE"},\
+							   {"1.202", "CORE"},\
+							   {"1.302", "CORE"},\
 							   {"1.212", "DAIO"},\
 							   {"0.312", "DAIO"},\
+							   {"1.312", "DAIO"},\
                                {"1.226", "REBO"},\
 							   {"1.326", "REBO"},\
 							   {"0.205", "IOCO"},\
 							   {"0.206", "IOCO"},\
 							   {"0.306", "IOCO"},\
+							   {"1.235", "CAN"},\
 							   {"5.200", "SABO"},\
 							   {"5.201", "SABO"},\
+							   {"5.300", "SABO"},\
+							   {"5.301", "SABO"},\
+							   {"1.247", "MVB"}, \
 							   {"1.347", "MVB"}, \
 							   {"1.348", "MVB"}, \
+							   {"1.235", "CAN"}, \
+							   {"1.335", "CAN"}, \
+							   {"0.230", "GPS"}, \
+							   {"0.330", "GPS"}, \
 							   {"0.315", "SRAM"},\
 							   {"0.310", "FLASH"},\
 							   {"0.320", "BACKPLANE"},\
@@ -54,6 +68,9 @@
 							   {"0.365", "BACKPLANE"},\
 							   {"0.366", "BACKPLANE"},\
 							   {"0.367", "BACKPLANE"},\
+							   {"1.306", "BACKPLANE"},\
+							   {"1.050", "CPM"},\
+							   {"1.052", "CPM"},\
 							   {"0.548", "CPM"},\
 							   {"1.137", "CPM"},\
 							   {"1.053", "CPM"},\
@@ -62,13 +79,15 @@
 							   {"0.566", "CPM"},\
 							   {"0.138", "CPM"},\
 							   {"0.548", "CPM"},\
+							   {"1.271", "DATRA"},\
+							   {"1.371", "DATRA"},\
 	}\
 
 /**
  * @def POSITION_TO_WRITING_SIZE
  * @brief size POSITION_TO_WRITING_SIZE
 */
-#define POSITION_TO_WRITING_SIZE 11
+#define POSITION_TO_WRITING_SIZE 14
 /**
  * @def POSITION_TO_WRITING
  * @brief database  POSITION_TO_WRITING
@@ -80,10 +99,13 @@
                              {"REBO", "7"},\
 							 {"SABO", "8"},\
 							 {"MVB", "9"}, \
-							 {"CPM", "10"},\
-							 {"SRAM", "11"},\
-							 {"FLASH", "12"},\
-							 {"BACKPLANE", "13"},\
+							 {"CAN", "10"}, \
+							 {"GPS", "11"}, \
+							 {"CPM", "12"},\
+							 {"SRAM", "13"},\
+							 {"FLASH", "14"},\
+							 {"BACKPLANE", "15"},\
+							 {"DATRA", "16"},\
 							 }\
 
 /**
@@ -148,6 +170,8 @@ namespace buildteloc_
 		type_::UINT64 rebo; /*!< value match rebo*/
 		type_::UINT64 sabo; /*!< value match sabo*/
 		type_::UINT64 mvb;  /*!< value match mvb*/
+		type_::UINT64 can;  /*!< value match mvb*/
+		type_::UINT64 gps;  /*!< value match mvb*/
 		type_::UINT64 cpm;  /*!< value match cpm*/
 		type_::UINT64 sram; /*!< value match sram*/
 		type_::UINT64 flash; /*!< value match flash*/
@@ -158,15 +182,15 @@ namespace buildteloc_
 extern buildteloc_::t_buildtelocstruct buildtelocstruct[TELOC_BOARD][TELOC_BOARD];
 //@}
 /**
-* \fn void lookuptableTeloc1500(const type_::CHAR * const s)
+* \fn void lookuptableTeloc1500(const type_::CHAR * const s, type_::UINT64 index, std::ofstream &myfile)
 * \brief the function build the teloc 1500
 * \param *s, pointer to be string read in xlsx file
 * \return
 */
 void lookuptableTeloc1500(const type_::CHAR * const s, type_::UINT64 index, std::ofstream &myfile);
 /**
-* \fn void lookuptableTeloc2500(const type_::CHAR * const s)
-* \brief the function build the teloc 1500
+* \fn void lookuptableTeloc2500(const type_::CHAR * const s, type_::UINT64 index, std::ofstream &myfile)
+* \brief the function build the teloc 2500
 * \param *s, pointer to be string read in xlsx file
 * \return
 */

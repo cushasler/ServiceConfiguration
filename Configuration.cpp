@@ -60,17 +60,23 @@ void config::readfileconfig(void)
 /*   Book* book  = xlCreateXMLBook();
    Book* obook = xlCreateXMLBook();*/
    type_::UINT64 number_of_Teloc = 0x0U;
-
-   std::ofstream MatrixTeloc("Teloc_Matrix.csv");
-   pimpl->create_template(MatrixTeloc);
+   std::string name_matrix;
+   std::ofstream MatrixTeloc;//("Teloc_Matrix.csv");
    if(fname.is_open()){
    getline(fname, getconfigstruct()->line);
    std::cout<<"line :: "<<getconfigstruct()->line<<std::endl;
   gettelocstruct()->kindofTeloc = whoamI(getconfigstruct()->line);
+  std::cout<<"kindofTeloc ==: "<<gettelocstruct()->kindofTeloc<<std::endl;
    pimpl->extract_filename(getconfigstruct()->line, getconfigstruct()->filename,
 					       &getconfigstruct()->assemblycode[number_of_Teloc][0]);
-   std::cout<<"getconfigstruct()->filename:: "<<getconfigstruct()->filename<<std::endl;
-  ifstream Data(getconfigstruct()->filename, ifstream::in);
+   name_matrix = getconfigstruct()->line.substr(15, 4);
+
+   name_matrix = "Teloc_Matrix_"+name_matrix+".csv";
+   std::cout<<"name_matrix = "<<name_matrix<<std::endl;
+   ofstream MatrixTeloc(name_matrix);
+   pimpl->create_template(MatrixTeloc, gettelocstruct()->kindofTeloc);
+
+    ifstream Data(getconfigstruct()->filename, ifstream::in);
   if(Data.is_open()){
 	  std::cout<<"Enter in the loop"<<std::endl;
 	  getline(Data, getconfigstruct()->title);
@@ -94,26 +100,31 @@ void config::readfileconfig(void)
   MatrixTeloc.close();
   std::cout<<"index_row ="<<getconfigstruct()->index_row<<std::endl;
   //open the file in reading mode
-  fstream CompareTeloc("Teloc_Matrix.csv", ios::in|ios::out);
+  fstream CompareTeloc(name_matrix, ios::in|ios::out);
+  if(CompareTeloc.is_open())
   pimpl->compare_create_configuration(CompareTeloc);
+  else
+	  std::cout<<"file not open"<<std::endl;
+
 }
 
 static string findteloccode(std::string line)
 {
- 	static char key = '.';
+ 	static char key = '_';
  	std::string teloccode;
     std::cout<<FUNCTION_NAME<<std::endl;
     size_t pos = line.find(key);
 	teloccode = line.substr(pos+1, (4));
 	//DEBUG_DISPLAY(debug_::enable, teloccode);
+	std::cout<<"teloc = "<<teloccode<<std::endl;
 	return(teloccode);
 }
 
 static string lookuptable(std::string teloccode)
 {
 	 std::string lret = "unknown";
-	 static std::string table[2][2] = {{"2421","Teloc 1500"},
-								       {"2620","Teloc 2500"}};
+	 static std::string table[2][2] = {{"1500","T1500"},
+								       {"2500","T2500"}};
 
 	for(type_::UINT8 jj = 0; jj < 2; jj++)
 	{

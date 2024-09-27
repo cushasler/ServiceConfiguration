@@ -88,7 +88,7 @@ type_::UINT64 plausibilitycheck_numberboard(buildteloc_::t_buildtelocstruct ptrb
 type_::UINT64 plausibilitycheck_boards(buildteloc_::t_buildtelocstruct ptrbuildtelocstruc[][TELOC_BOARD], type_::UINT64 len, type_::UINT64 jj)
 {
 	type_::ebool lMatch = type_::TRUE;
-	type_::UINT64 valuematch = 0x64U;
+	type_::UINT64 valuematch = 0x00U;
 	if(isTelocUUC(jj) == type_::FALSE)
 	{
 		std::cout<<"plausibiity check boards"<<std::endl;
@@ -119,13 +119,14 @@ type_::UINT64 plausibilitycheck_boards(buildteloc_::t_buildtelocstruct ptrbuildt
 type_::ebool compare_handle(type_::UINT64 main_config, type_::UINT64 code_config)
 {
 	type_::ebool match = type_:: FALSE;
-	const type_::UINT64 basic_config = 0x460;
+	const type_::UINT64 basic_config = 0x11E0;
 	std::cout<<"main_config =="<<main_config<<std::endl;
 	std::cout<<"code_config =="<<code_config<<std::endl;
-	if(code_config == main_config)
+	if(code_config == main_config)//both code are equal
 		match = type_::TRUE;
 	else
 	{
+		// calculate the xor or both and verify if it-s included in the basic_config
 		type_::UINT64 lresult = main_config ^ code_config;
 		lresult &= basic_config;
 		if(lresult == basic_config)
